@@ -1,0 +1,1780 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Jan 17, 2023 at 08:58 PM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 8.1.6
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `somalia`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `announcements`
+--
+
+CREATE TABLE `announcements` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `store_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `category_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `city_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `title` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_featured` int(11) NOT NULL DEFAULT 0,
+  `price` double(8,2) DEFAULT 0.00,
+  `status` int(11) NOT NULL DEFAULT 0,
+  `images` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `number` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `currency_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `type` tinyint(4) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `announcements_attributes`
+--
+
+CREATE TABLE `announcements_attributes` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `announcement_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `name` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `value` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `articles`
+--
+
+CREATE TABLE `articles` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `main_image` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_featured` int(11) NOT NULL DEFAULT 0,
+  `slug` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `article_categories`
+--
+
+CREATE TABLE `article_categories` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `article_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `category_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `categories`
+--
+
+CREATE TABLE `categories` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `parent_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `image` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `slug` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `category_attributes`
+--
+
+CREATE TABLE `category_attributes` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `chats`
+--
+
+CREATE TABLE `chats` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `sender_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `chat_messages`
+--
+
+CREATE TABLE `chat_messages` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `message` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `photo` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sender_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `chat_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cities`
+--
+
+CREATE TABLE `cities` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 0,
+  `country_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contacts`
+--
+
+CREATE TABLE `contacts` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `name` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `message` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `has_support_reply` tinyint(4) NOT NULL DEFAULT 0,
+  `status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'PENDING',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contact_replies`
+--
+
+CREATE TABLE `contact_replies` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `contact_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `is_support_reply` tinyint(4) NOT NULL DEFAULT 0,
+  `content` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `countries`
+--
+
+CREATE TABLE `countries` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `flag` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `currency_id` bigint(20) UNSIGNED NOT NULL DEFAULT 3,
+  `code` int(11) NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `countries`
+--
+
+INSERT INTO `countries` (`id`, `name`, `flag`, `currency_id`, `code`, `status`, `created_at`, `updated_at`) VALUES
+(1, '{\"ar\":\"\\u0627\\u0644\\u0648\\u0644\\u0627\\u064a\\u0627\\u062a \\u0627\\u0644\\u0645\\u062a\\u062d\\u062f\\u0629 \\u0627\\u0644\\u0623\\u0645\\u0631\\u064a\\u0643\\u064a\\u0629\",\"en\":\"US\",\"so\":\"US\"}', NULL, 1, 1, 1, '2023-01-17 15:57:31', '2023-01-17 15:57:31');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `currencies`
+--
+
+CREATE TABLE `currencies` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `currencies`
+--
+
+INSERT INTO `currencies` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'دولار أمربكي', '2023-01-17 15:56:33', '2023-01-17 15:56:33');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `failed_jobs`
+--
+
+CREATE TABLE `failed_jobs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `faqs`
+--
+
+CREATE TABLE `faqs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `question` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `answer` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_featured` tinyint(4) NOT NULL DEFAULT 0,
+  `order` int(11) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `help_centers`
+--
+
+CREATE TABLE `help_centers` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `vid_category` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `link` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `subtitle` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `hidden` tinyint(4) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hub_files`
+--
+
+CREATE TABLE `hub_files` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `path` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `original_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `extension` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `size` int(11) DEFAULT NULL,
+  `used_at` timestamp NULL DEFAULT NULL,
+  `getMimeType` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `type` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `type_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_main` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `visibility` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bucket_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `order` int(11) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `hub_files`
+--
+
+INSERT INTO `hub_files` (`id`, `user_id`, `path`, `original_name`, `name`, `extension`, `size`, `used_at`, `getMimeType`, `type`, `type_id`, `is_main`, `visibility`, `bucket_name`, `order`, `created_at`, `updated_at`) VALUES
+(1, 1, '/uploads/website/', 'branding-identity-corporate-vector-logo-design_460848-8717.png', 'branding-identity-corporate-vector-logo-design460848-8717-bkqW7F.png', 'png', 8055, NULL, 'image/png', 'IMAGE', NULL, NULL, 'PUBLIC', 'local', 0, '2023-01-17 16:04:34', '2023-01-17 16:04:34'),
+(2, 1, '/uploads/website/', 'branding-identity-corporate-vector-logo-design_460848-8718.png', 'branding-identity-corporate-vector-logo-design460848-8718-Wegi6T.png', 'png', 35196, NULL, 'image/png', 'IMAGE', NULL, NULL, 'PUBLIC', 'local', 0, '2023-01-17 16:04:34', '2023-01-17 16:04:34'),
+(3, 1, '/uploads/website/', 'branding-identity-corporate-vector-logo-design_460848-8719.png', 'branding-identity-corporate-vector-logo-design460848-8719-Y62jd4.png', 'png', 1645, NULL, 'image/png', 'IMAGE', NULL, NULL, 'PUBLIC', 'local', 0, '2023-01-17 16:04:34', '2023-01-17 16:04:34');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `item_seens`
+--
+
+CREATE TABLE `item_seens` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `ip` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` bigint(20) UNSIGNED NOT NULL,
+  `type_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jobs`
+--
+
+CREATE TABLE `jobs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `queue` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `attempts` tinyint(3) UNSIGNED NOT NULL,
+  `reserved_at` int(10) UNSIGNED DEFAULT NULL,
+  `available_at` int(10) UNSIGNED NOT NULL,
+  `created_at` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `menus`
+--
+
+CREATE TABLE `menus` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `location` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `menu_links`
+--
+
+CREATE TABLE `menu_links` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `menu_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `menu_link_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'CUSTOM_LINK',
+  `type_id` int(11) DEFAULT NULL,
+  `title` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `url` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `icon` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `order` int(11) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `migrations`
+--
+
+CREATE TABLE `migrations` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `migrations`
+--
+
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+(1, '2014_10_12_000000_create_users_table', 1),
+(2, '2014_10_12_074856_create_report_errors_table', 1),
+(3, '2014_10_12_100000_create_password_resets_table', 1),
+(4, '2019_08_19_000000_create_failed_jobs_table', 1),
+(5, '2019_09_15_000010_create_tenants_table', 1),
+(6, '2019_12_14_000001_create_personal_access_tokens_table', 1),
+(7, '2021_01_25_153606_create_sessions_table', 1),
+(8, '2021_02_14_125240_create_notifications_table', 1),
+(9, '2021_10_30_101814_create_jobs_table', 1),
+(10, '2021_11_05_122341_create_hub_files_table', 1),
+(11, '2021_11_14_161804_create_settings_table', 1),
+(12, '2021_11_14_161805_create_rate_limits_table', 1),
+(13, '2021_11_15_103143_create_rate_limit_details_table', 1),
+(14, '2021_11_16_115821_create_categories_table', 1),
+(15, '2021_11_16_115834_create_articles_table', 1),
+(16, '2021_11_16_115903_create_contacts_table', 1),
+(17, '2021_11_16_115949_create_redirections_table', 1),
+(18, '2022_03_17_141301_create_item_seens_table', 1),
+(19, '2022_03_17_142610_create_faqs_table', 1),
+(20, '2022_04_11_131131_create_pages_table', 1),
+(21, '2022_04_11_131158_create_menus_table', 1),
+(22, '2022_04_11_131350_create_article_categories_table', 1),
+(23, '2022_04_11_131731_create_menu_links_table', 1),
+(24, '2022_04_27_173108_create_contact_replies_table', 1),
+(25, '2022_06_23_015706_create_tables_table', 1),
+(26, '2022_06_29_164910_create_products_table', 1),
+(27, '2022_07_16_011103_create_countries_table', 1),
+(28, '2022_07_16_011103_update_countries_table', 1),
+(29, '2022_07_16_011231_create_cities_table', 1),
+(30, '2022_07_16_011231_update_cities_table', 1),
+(31, '2022_07_16_011357_create_states_table', 1),
+(32, '2022_07_16_011357_update_states_table', 1),
+(33, '2022_07_16_025506_add_city_id_to_users_table', 1),
+(34, '2022_07_16_044624_add_fcm_token_to_users_table', 1),
+(35, '2022_07_17_081631_create_category_attributes_table', 1),
+(36, '2022_07_17_173052_create_announcements_table', 1),
+(37, '2022_07_18_044624_add_stores_table', 1),
+(38, '2022_07_19_043624_add_announcements_table', 1),
+(39, '2022_07_19_044624_add_announcements_attributes_table', 1),
+(40, '2022_07_19_044624_change_announcements_attributes_table', 1),
+(41, '2022_07_19_112516_create_currencies_table', 1),
+(42, '2022_07_20_044624_add_profile_attributes_table', 1),
+(43, '2022_07_20_051235_create_notifications_table', 1),
+(44, '2022_07_21_044624_add_announcements_add_number_table', 1),
+(45, '2022_07_21_044624_countries_table_add_currency_id', 1),
+(46, '2022_07_21_044624_create_packages_table', 1),
+(47, '2022_07_21_044624_create_rates_table', 1),
+(48, '2022_08_04_222722_create_chats_table', 1),
+(49, '2022_08_05_165125_create_chat_messages_table', 1),
+(50, '2022_08_05_222517_create_sliders_table', 1),
+(51, '2022_08_14_222517_create_user_jobs_table', 1),
+(52, '2022_08_14_222517_create_user_skiles_table', 1),
+(53, '2022_09_17_223531_add_change_notifications_table', 1),
+(54, '2022_09_17_223531_add_currency_id_column_to_anouncements_table', 1),
+(55, '2022_09_17_223531_add_type_column_to_anouncements_table', 1),
+(56, '2022_10_17_223531_add_type_about_page_to_settings_table', 1),
+(57, '2023_01_06_201525_create_help_centers_table', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notifications`
+--
+
+CREATE TABLE `notifications` (
+  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:guid)',
+  `type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `notifiable_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `notifiable_id` bigint(20) UNSIGNED NOT NULL,
+  `data` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `read_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `packages`
+--
+
+CREATE TABLE `packages` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `title` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `price` double NOT NULL,
+  `announcement_number` bigint(20) UNSIGNED NOT NULL DEFAULT 10,
+  `time` bigint(20) UNSIGNED NOT NULL DEFAULT 30,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `packages`
+--
+
+INSERT INTO `packages` (`id`, `title`, `description`, `price`, `announcement_number`, `time`, `created_at`, `updated_at`) VALUES
+(1, '{\"ar\":\"\\u0627\\u0644\\u0628\\u0627\\u0642\\u0629 \\u0627\\u0644\\u0645\\u062c\\u0627\\u0646\\u064a\\u0629\"}', '{\"ar\":\"\\u0627\\u0644\\u0628\\u0627\\u0642\\u0629 \\u0627\\u0644\\u0645\\u062c\\u0627\\u0646\\u064a\\u0629 \\u0648\\u0627\\u0644\\u0645\\u062d\\u062f\\u0648\\u062f\\u0629 \\u0628\\u0639\\u062f\\u062f \\u0645\\u0639\\u064a\\u0646 \\u0645\\u0646 \\u0627\\u0644\\u0627\\u0639\\u0644\\u0627\\u0646\\u0627\\u062a\"}', 0, 10, 365, '2023-01-17 15:51:28', '2023-01-17 15:51:28');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pages`
+--
+
+CREATE TABLE `pages` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `title` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `title_en` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `slug` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `removable` tinyint(4) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `password_resets`
+--
+
+CREATE TABLE `password_resets` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `personal_access_tokens`
+--
+
+CREATE TABLE `personal_access_tokens` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `tokenable_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `last_used_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `products`
+--
+
+CREATE TABLE `products` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `main_image` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_featured` int(11) NOT NULL DEFAULT 0,
+  `slug` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `price` double NOT NULL,
+  `category_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `profile_attributes`
+--
+
+CREATE TABLE `profile_attributes` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `value` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rates`
+--
+
+CREATE TABLE `rates` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `stars` tinyint(4) NOT NULL,
+  `description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `rated_user` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rate_limits`
+--
+
+CREATE TABLE `rate_limits` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `traffic_landing` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `domain` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `main_domain` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `domain_count` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `prev_link` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ip` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `agent_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `browser` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `device` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `operating_system` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `code` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `country_code` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `country_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `note` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `rate_limits`
+--
+
+INSERT INTO `rate_limits` (`id`, `user_id`, `traffic_landing`, `domain`, `main_domain`, `domain_count`, `prev_link`, `ip`, `agent_name`, `browser`, `device`, `operating_system`, `code`, `country_code`, `country_name`, `note`, `created_at`, `updated_at`) VALUES
+(1, NULL, 'http://127.0.0.1:8000', '', NULL, NULL, 'http://127.0.0.1:8000/en', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36', 'Chrome', 'Computer', 'Windows 10', NULL, '404', 'غير محدد', NULL, '2023-01-17 15:50:32', '2023-01-17 15:50:32');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rate_limit_details`
+--
+
+CREATE TABLE `rate_limit_details` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `rate_limit_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `url` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `rate_limit_details`
+--
+
+INSERT INTO `rate_limit_details` (`id`, `user_id`, `rate_limit_id`, `url`, `created_at`, `updated_at`) VALUES
+(1, NULL, 1, 'http://127.0.0.1:8000/en', '2023-01-17 15:50:32', '2023-01-17 15:50:32'),
+(2, NULL, 1, 'http://127.0.0.1:8000/manifest.json', '2023-01-17 15:50:37', '2023-01-17 15:50:37'),
+(3, NULL, 1, 'http://127.0.0.1:8000/en/login', '2023-01-17 15:50:46', '2023-01-17 15:50:46'),
+(4, NULL, 1, 'http://127.0.0.1:8000/en', '2023-01-17 15:50:47', '2023-01-17 15:50:47'),
+(5, NULL, 1, 'http://127.0.0.1:8000/manifest.json', '2023-01-17 15:50:50', '2023-01-17 15:50:50'),
+(6, NULL, 1, 'http://127.0.0.1:8000/en/login', '2023-01-17 15:51:48', '2023-01-17 15:51:48'),
+(7, 1, 1, 'http://127.0.0.1:8000', '2023-01-17 15:51:49', '2023-01-17 15:51:49'),
+(8, 1, 1, 'http://127.0.0.1:8000/en', '2023-01-17 15:51:49', '2023-01-17 15:51:49'),
+(9, NULL, 1, 'http://127.0.0.1:8000/manifest.json', '2023-01-17 15:51:52', '2023-01-17 15:51:52'),
+(10, 1, 1, 'http://127.0.0.1:8000/en/notifications/ajax', '2023-01-17 15:51:53', '2023-01-17 15:51:53'),
+(11, 1, 1, 'http://127.0.0.1:8000/ar', '2023-01-17 15:51:57', '2023-01-17 15:51:57'),
+(12, NULL, 1, 'http://127.0.0.1:8000/manifest.json', '2023-01-17 15:52:00', '2023-01-17 15:52:00'),
+(13, 1, 1, 'http://127.0.0.1:8000/ar/help-center', '2023-01-17 15:52:05', '2023-01-17 15:52:05'),
+(14, NULL, 1, 'http://127.0.0.1:8000/manifest.json', '2023-01-17 15:52:07', '2023-01-17 15:52:07'),
+(15, 1, 1, 'http://127.0.0.1:8000/ar/announcements/create', '2023-01-17 15:52:16', '2023-01-17 15:52:16'),
+(16, NULL, 1, 'http://127.0.0.1:8000/manifest.json', '2023-01-17 15:52:19', '2023-01-17 15:52:19'),
+(17, 1, 1, 'http://127.0.0.1:8000/ar/notifications/ajax', '2023-01-17 15:52:43', '2023-01-17 15:52:43'),
+(18, 1, 1, 'http://127.0.0.1:8000/ar/notifications/ajax', '2023-01-17 15:53:02', '2023-01-17 15:53:02'),
+(19, 1, 1, 'http://127.0.0.1:8000/admin', '2023-01-17 15:53:02', '2023-01-17 15:53:02'),
+(20, NULL, 1, 'http://127.0.0.1:8000/manifest.json', '2023-01-17 15:53:06', '2023-01-17 15:53:06'),
+(21, 1, 1, 'http://127.0.0.1:8000/admin/help-center', '2023-01-17 15:53:08', '2023-01-17 15:53:08'),
+(22, NULL, 1, 'http://127.0.0.1:8000/manifest.json', '2023-01-17 15:53:10', '2023-01-17 15:53:10'),
+(23, 1, 1, 'http://127.0.0.1:8000/admin/help-center/create', '2023-01-17 15:53:12', '2023-01-17 15:53:12'),
+(24, NULL, 1, 'http://127.0.0.1:8000/manifest.json', '2023-01-17 15:53:14', '2023-01-17 15:53:14'),
+(25, 1, 1, 'http://127.0.0.1:8000/admin/countries', '2023-01-17 15:53:24', '2023-01-17 15:53:24'),
+(26, NULL, 1, 'http://127.0.0.1:8000/manifest.json', '2023-01-17 15:53:26', '2023-01-17 15:53:26'),
+(27, 1, 1, 'http://127.0.0.1:8000/notifications/ajax', '2023-01-17 15:53:35', '2023-01-17 15:53:35'),
+(28, 1, 1, 'http://127.0.0.1:8000/notifications/ajax', '2023-01-17 15:53:50', '2023-01-17 15:53:50'),
+(29, 1, 1, 'http://127.0.0.1:8000/notifications/ajax', '2023-01-17 15:54:15', '2023-01-17 15:54:15'),
+(30, 1, 1, 'http://127.0.0.1:8000/notifications/ajax', '2023-01-17 15:54:41', '2023-01-17 15:54:41'),
+(31, 1, 1, 'http://127.0.0.1:8000/admin/countries/create', '2023-01-17 15:54:46', '2023-01-17 15:54:46'),
+(32, NULL, 1, 'http://127.0.0.1:8000/manifest.json', '2023-01-17 15:54:48', '2023-01-17 15:54:48'),
+(33, 1, 1, 'http://127.0.0.1:8000/admin/countries', '2023-01-17 15:55:00', '2023-01-17 15:55:00'),
+(34, NULL, 1, 'http://127.0.0.1:8000/manifest.json', '2023-01-17 15:55:02', '2023-01-17 15:55:02'),
+(35, 1, 1, 'http://127.0.0.1:8000/admin/countries/create', '2023-01-17 15:55:17', '2023-01-17 15:55:17'),
+(36, NULL, 1, 'http://127.0.0.1:8000/manifest.json', '2023-01-17 15:55:19', '2023-01-17 15:55:19'),
+(37, 1, 1, 'http://127.0.0.1:8000/notifications/ajax', '2023-01-17 15:55:44', '2023-01-17 15:55:44'),
+(38, 1, 1, 'http://127.0.0.1:8000/notifications/ajax', '2023-01-17 15:55:52', '2023-01-17 15:55:52'),
+(39, 1, 1, 'http://127.0.0.1:8000/admin/currencies', '2023-01-17 15:56:08', '2023-01-17 15:56:08'),
+(40, NULL, 1, 'http://127.0.0.1:8000/manifest.json', '2023-01-17 15:56:11', '2023-01-17 15:56:11'),
+(41, 1, 1, 'http://127.0.0.1:8000/admin/currencies/create', '2023-01-17 15:56:13', '2023-01-17 15:56:13'),
+(42, NULL, 1, 'http://127.0.0.1:8000/manifest.json', '2023-01-17 15:56:14', '2023-01-17 15:56:14'),
+(43, 1, 1, 'http://127.0.0.1:8000/admin/currencies', '2023-01-17 15:56:33', '2023-01-17 15:56:33'),
+(44, 1, 1, 'http://127.0.0.1:8000/admin/currencies', '2023-01-17 15:56:33', '2023-01-17 15:56:33'),
+(45, NULL, 1, 'http://127.0.0.1:8000/manifest.json', '2023-01-17 15:56:35', '2023-01-17 15:56:35'),
+(46, 1, 1, 'http://127.0.0.1:8000/admin/countries', '2023-01-17 15:56:39', '2023-01-17 15:56:39'),
+(47, NULL, 1, 'http://127.0.0.1:8000/manifest.json', '2023-01-17 15:56:41', '2023-01-17 15:56:41'),
+(48, 1, 1, 'http://127.0.0.1:8000/admin/countries/create', '2023-01-17 15:56:43', '2023-01-17 15:56:43'),
+(49, NULL, 1, 'http://127.0.0.1:8000/manifest.json', '2023-01-17 15:56:45', '2023-01-17 15:56:45'),
+(50, 1, 1, 'http://127.0.0.1:8000/notifications/ajax', '2023-01-17 15:57:09', '2023-01-17 15:57:09'),
+(51, 1, 1, 'http://127.0.0.1:8000/notifications/ajax', '2023-01-17 15:57:27', '2023-01-17 15:57:27'),
+(52, 1, 1, 'http://127.0.0.1:8000/admin/countries', '2023-01-17 15:57:30', '2023-01-17 15:57:30'),
+(53, 1, 1, 'http://127.0.0.1:8000/admin/countries', '2023-01-17 15:57:31', '2023-01-17 15:57:31'),
+(54, NULL, 1, 'http://127.0.0.1:8000/manifest.json', '2023-01-17 15:57:33', '2023-01-17 15:57:33'),
+(55, 1, 1, 'http://127.0.0.1:8000/admin/stores', '2023-01-17 15:57:44', '2023-01-17 15:57:44'),
+(56, NULL, 1, 'http://127.0.0.1:8000/manifest.json', '2023-01-17 15:57:46', '2023-01-17 15:57:46'),
+(57, 1, 1, 'http://127.0.0.1:8000/notifications/ajax', '2023-01-17 15:57:59', '2023-01-17 15:57:59'),
+(58, 1, 1, 'http://127.0.0.1:8000/admin/settings', '2023-01-17 15:58:08', '2023-01-17 15:58:08'),
+(59, NULL, 1, 'http://127.0.0.1:8000/manifest.json', '2023-01-17 15:58:14', '2023-01-17 15:58:14'),
+(60, 1, 1, 'http://127.0.0.1:8000/notifications/ajax', '2023-01-17 15:58:35', '2023-01-17 15:58:35'),
+(61, 1, 1, 'http://127.0.0.1:8000/notifications/ajax', '2023-01-17 15:59:37', '2023-01-17 15:59:37'),
+(62, 1, 1, 'http://127.0.0.1:8000/notifications/ajax', '2023-01-17 16:00:37', '2023-01-17 16:00:37'),
+(63, 1, 1, 'http://127.0.0.1:8000/notifications/ajax', '2023-01-17 16:01:38', '2023-01-17 16:01:38'),
+(64, 1, 1, 'http://127.0.0.1:8000/notifications/ajax', '2023-01-17 16:02:39', '2023-01-17 16:02:39'),
+(65, 1, 1, 'http://127.0.0.1:8000/notifications/ajax', '2023-01-17 16:02:58', '2023-01-17 16:02:58'),
+(66, 1, 1, 'http://127.0.0.1:8000/notifications/ajax', '2023-01-17 16:03:06', '2023-01-17 16:03:06'),
+(67, 1, 1, 'http://127.0.0.1:8000/notifications/ajax', '2023-01-17 16:03:40', '2023-01-17 16:03:40'),
+(68, 1, 1, 'http://127.0.0.1:8000/notifications/ajax', '2023-01-17 16:03:42', '2023-01-17 16:03:42'),
+(69, 1, 1, 'http://127.0.0.1:8000/notifications/ajax', '2023-01-17 16:03:48', '2023-01-17 16:03:48'),
+(70, 1, 1, 'http://127.0.0.1:8000/notifications/ajax', '2023-01-17 16:04:27', '2023-01-17 16:04:27'),
+(71, 1, 1, 'http://127.0.0.1:8000/notifications/ajax', '2023-01-17 16:04:32', '2023-01-17 16:04:32'),
+(72, 1, 1, 'http://127.0.0.1:8000/admin/settings/1/update', '2023-01-17 16:04:33', '2023-01-17 16:04:33'),
+(73, 1, 1, 'http://127.0.0.1:8000/admin/settings', '2023-01-17 16:04:34', '2023-01-17 16:04:34'),
+(74, NULL, 1, 'http://127.0.0.1:8000/manifest.json', '2023-01-17 16:04:39', '2023-01-17 16:04:39'),
+(75, 1, 1, 'http://127.0.0.1:8000/notifications/ajax', '2023-01-17 16:04:47', '2023-01-17 16:04:47'),
+(76, 1, 1, 'http://127.0.0.1:8000', '2023-01-17 16:04:47', '2023-01-17 16:04:47'),
+(77, 1, 1, 'http://127.0.0.1:8000/ar', '2023-01-17 16:04:48', '2023-01-17 16:04:48'),
+(78, NULL, 1, 'http://127.0.0.1:8000/manifest.json', '2023-01-17 16:04:50', '2023-01-17 16:04:50'),
+(79, 1, 1, 'http://127.0.0.1:8000/ar/announcements/create', '2023-01-17 16:05:08', '2023-01-17 16:05:08'),
+(80, NULL, 1, 'http://127.0.0.1:8000/manifest.json', '2023-01-17 16:05:11', '2023-01-17 16:05:11'),
+(81, 1, 1, 'http://127.0.0.1:8000/livewire/message/city', '2023-01-17 16:05:24', '2023-01-17 16:05:24');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `redirections`
+--
+
+CREATE TABLE `redirections` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `new_url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `code` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `report_errors`
+--
+
+CREATE TABLE `report_errors` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `title` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ip` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_agent` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `request` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `note` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sessions`
+--
+
+CREATE TABLE `sessions` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_agent` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `payload` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_activity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `settings`
+--
+
+CREATE TABLE `settings` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `website_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `website_logo` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `website_wide_logo` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `website_icon` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `website_cover` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `website_bio` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `contact_email` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone2` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `whatsapp_phone` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `facebook_link` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `twitter_link` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `instagram_link` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `youtube_link` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `telegram_link` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `whatsapp_link` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tiktok_link` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `upwork_link` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nafezly_link` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `linkedin_link` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `github_link` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `contact_page` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `another_link1` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `another_link2` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `another_link3` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `main_color` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '#0194fe',
+  `hover_color` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '#0194fe',
+  `header_code` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `footer_code` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `robots_txt` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `about_page` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `privacy_page` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `settings`
+--
+
+INSERT INTO `settings` (`id`, `website_name`, `website_logo`, `website_wide_logo`, `website_icon`, `website_cover`, `address`, `website_bio`, `contact_email`, `phone`, `phone2`, `whatsapp_phone`, `facebook_link`, `twitter_link`, `instagram_link`, `youtube_link`, `telegram_link`, `whatsapp_link`, `tiktok_link`, `upwork_link`, `nafezly_link`, `linkedin_link`, `github_link`, `contact_page`, `another_link1`, `another_link2`, `another_link3`, `main_color`, `hover_color`, `header_code`, `footer_code`, `robots_txt`, `created_at`, `updated_at`, `about_page`, `privacy_page`) VALUES
+(1, 'اسم الموقع هنا', 'branding-identity-corporate-vector-logo-design460848-8717-bkqW7F.png', 'branding-identity-corporate-vector-logo-design460848-8718-Wegi6T.png', 'branding-identity-corporate-vector-logo-design460848-8719-Y62jd4.png', NULL, NULL, 'نبذة عن الموقع', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '#821b10', '#821b10', NULL, NULL, NULL, '2023-01-17 15:50:30', '2023-01-17 16:04:34', '{\"ar\":null,\"en\":null,\"so\":null}', '{\"ar\":null,\"en\":null,\"so\":null}');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sliders`
+--
+
+CREATE TABLE `sliders` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `link` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `states`
+--
+
+CREATE TABLE `states` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 0,
+  `city_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stores`
+--
+
+CREATE TABLE `stores` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `category_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `city_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `is_featured` int(11) NOT NULL DEFAULT 0,
+  `slug` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `location` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `avatar` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 0,
+  `cover_image` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `blocked` int(11) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `subscriptions`
+--
+
+CREATE TABLE `subscriptions` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `package_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `price` double NOT NULL,
+  `status` int(11) NOT NULL DEFAULT 0,
+  `paid` int(11) NOT NULL DEFAULT 0,
+  `start_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `end_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tables`
+--
+
+CREATE TABLE `tables` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` int(11) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tenants`
+--
+
+CREATE TABLE `tenants` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `data` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`data`))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `avatar` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `power` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'USER',
+  `bio` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `blocked` int(11) NOT NULL DEFAULT 0,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `last_activity` timestamp NULL DEFAULT NULL,
+  `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `city_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `fcm_token` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `avatar`, `phone`, `power`, `bio`, `blocked`, `email`, `email_verified_at`, `last_activity`, `password`, `remember_token`, `created_at`, `updated_at`, `city_id`, `fcm_token`) VALUES
+(1, 'ADMIN', NULL, NULL, 'ADMIN', NULL, 0, 'admin@admin.com', '2023-01-17 03:51:28', NULL, '$2y$10$tsPyYn4zP.7Ed3sDpNcduub/dEZxG20AM7C0ehpOf/oQ./k4lRXh.', 'wqUHmVfjtLZIF5XgNxO8udFfcFAZSn5cWhwJhaxbX6Zzy69N7DJrW2SqDaXX', '2023-01-17 15:51:28', '2023-01-17 15:51:28', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_jobs`
+--
+
+CREATE TABLE `user_jobs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_skills`
+--
+
+CREATE TABLE `user_skills` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `announcements`
+--
+ALTER TABLE `announcements`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `announcements_user_id_foreign` (`user_id`);
+
+--
+-- Indexes for table `announcements_attributes`
+--
+ALTER TABLE `announcements_attributes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `announcements_attributes_announcement_id_foreign` (`announcement_id`);
+
+--
+-- Indexes for table `articles`
+--
+ALTER TABLE `articles`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `articles_slug_unique` (`slug`),
+  ADD KEY `articles_user_id_foreign` (`user_id`);
+
+--
+-- Indexes for table `article_categories`
+--
+ALTER TABLE `article_categories`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `article_categories_article_id_foreign` (`article_id`),
+  ADD KEY `article_categories_category_id_foreign` (`category_id`);
+
+--
+-- Indexes for table `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `categories_user_id_foreign` (`user_id`),
+  ADD KEY `categories_parent_id_foreign` (`parent_id`);
+
+--
+-- Indexes for table `category_attributes`
+--
+ALTER TABLE `category_attributes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `category_attributes_category_id_foreign` (`category_id`);
+
+--
+-- Indexes for table `chats`
+--
+ALTER TABLE `chats`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `chat_messages`
+--
+ALTER TABLE `chat_messages`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `cities`
+--
+ALTER TABLE `cities`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `contacts`
+--
+ALTER TABLE `contacts`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `contacts_user_id_foreign` (`user_id`);
+
+--
+-- Indexes for table `contact_replies`
+--
+ALTER TABLE `contact_replies`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `contact_replies_user_id_foreign` (`user_id`),
+  ADD KEY `contact_replies_contact_id_foreign` (`contact_id`);
+
+--
+-- Indexes for table `countries`
+--
+ALTER TABLE `countries`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `countries_currency_id_foreign` (`currency_id`);
+
+--
+-- Indexes for table `currencies`
+--
+ALTER TABLE `currencies`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `failed_jobs`
+--
+ALTER TABLE `failed_jobs`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
+
+--
+-- Indexes for table `faqs`
+--
+ALTER TABLE `faqs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `faqs_user_id_foreign` (`user_id`);
+
+--
+-- Indexes for table `help_centers`
+--
+ALTER TABLE `help_centers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `hub_files`
+--
+ALTER TABLE `hub_files`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `hub_files_user_id_foreign` (`user_id`),
+  ADD KEY `hub_files_name_index` (`name`);
+
+--
+-- Indexes for table `item_seens`
+--
+ALTER TABLE `item_seens`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `item_seens_user_id_index` (`user_id`),
+  ADD KEY `item_seens_ip_index` (`ip`),
+  ADD KEY `item_seens_type_index` (`type`),
+  ADD KEY `item_seens_type_id_index` (`type_id`),
+  ADD KEY `item_seens_created_at_index` (`created_at`),
+  ADD KEY `item_seens_updated_at_index` (`updated_at`);
+
+--
+-- Indexes for table `jobs`
+--
+ALTER TABLE `jobs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `jobs_queue_index` (`queue`);
+
+--
+-- Indexes for table `menus`
+--
+ALTER TABLE `menus`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `menus_location_unique` (`location`);
+
+--
+-- Indexes for table `menu_links`
+--
+ALTER TABLE `menu_links`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `menu_links_menu_id_foreign` (`menu_id`),
+  ADD KEY `menu_links_menu_link_id_foreign` (`menu_link_id`);
+
+--
+-- Indexes for table `migrations`
+--
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `notifications_notifiable_type_notifiable_id_index` (`notifiable_type`,`notifiable_id`);
+
+--
+-- Indexes for table `packages`
+--
+ALTER TABLE `packages`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `pages`
+--
+ALTER TABLE `pages`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `pages_slug_unique` (`slug`),
+  ADD KEY `pages_user_id_foreign` (`user_id`);
+
+--
+-- Indexes for table `password_resets`
+--
+ALTER TABLE `password_resets`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `password_resets_email_index` (`email`);
+
+--
+-- Indexes for table `personal_access_tokens`
+--
+ALTER TABLE `personal_access_tokens`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
+  ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
+
+--
+-- Indexes for table `products`
+--
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `products_slug_unique` (`slug`);
+
+--
+-- Indexes for table `profile_attributes`
+--
+ALTER TABLE `profile_attributes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `profile_attributes_user_id_foreign` (`user_id`);
+
+--
+-- Indexes for table `rates`
+--
+ALTER TABLE `rates`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `rates_user_id_foreign` (`user_id`),
+  ADD KEY `rates_rated_user_foreign` (`rated_user`);
+
+--
+-- Indexes for table `rate_limits`
+--
+ALTER TABLE `rate_limits`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `rate_limits_user_id_foreign` (`user_id`),
+  ADD KEY `rate_limits_ip_index` (`ip`),
+  ADD KEY `rate_limits_agent_name_index` (`agent_name`),
+  ADD KEY `rate_limits_browser_index` (`browser`),
+  ADD KEY `rate_limits_device_index` (`device`),
+  ADD KEY `rate_limits_operating_system_index` (`operating_system`),
+  ADD KEY `rate_limits_created_at_index` (`created_at`);
+
+--
+-- Indexes for table `rate_limit_details`
+--
+ALTER TABLE `rate_limit_details`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `rate_limit_details_user_id_foreign` (`user_id`),
+  ADD KEY `rate_limit_details_rate_limit_id_foreign` (`rate_limit_id`),
+  ADD KEY `rate_limit_details_url_index` (`url`);
+
+--
+-- Indexes for table `redirections`
+--
+ALTER TABLE `redirections`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `redirections_user_id_foreign` (`user_id`);
+
+--
+-- Indexes for table `report_errors`
+--
+ALTER TABLE `report_errors`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `report_errors_user_id_foreign` (`user_id`);
+
+--
+-- Indexes for table `sessions`
+--
+ALTER TABLE `sessions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `sessions_user_id_index` (`user_id`),
+  ADD KEY `sessions_last_activity_index` (`last_activity`);
+
+--
+-- Indexes for table `settings`
+--
+ALTER TABLE `settings`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `sliders`
+--
+ALTER TABLE `sliders`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `states`
+--
+ALTER TABLE `states`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `stores`
+--
+ALTER TABLE `stores`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `stores_slug_unique` (`slug`),
+  ADD KEY `stores_user_id_foreign` (`user_id`),
+  ADD KEY `stores_category_id_foreign` (`category_id`),
+  ADD KEY `stores_city_id_foreign` (`city_id`);
+
+--
+-- Indexes for table `subscriptions`
+--
+ALTER TABLE `subscriptions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `subscriptions_user_id_foreign` (`user_id`),
+  ADD KEY `subscriptions_package_id_foreign` (`package_id`);
+
+--
+-- Indexes for table `tables`
+--
+ALTER TABLE `tables`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tenants`
+--
+ALTER TABLE `tenants`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `users_email_unique` (`email`),
+  ADD KEY `users_last_activity_index` (`last_activity`);
+
+--
+-- Indexes for table `user_jobs`
+--
+ALTER TABLE `user_jobs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_jobs_user_id_foreign` (`user_id`);
+
+--
+-- Indexes for table `user_skills`
+--
+ALTER TABLE `user_skills`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_skills_user_id_foreign` (`user_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `announcements`
+--
+ALTER TABLE `announcements`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `announcements_attributes`
+--
+ALTER TABLE `announcements_attributes`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `articles`
+--
+ALTER TABLE `articles`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `article_categories`
+--
+ALTER TABLE `article_categories`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `category_attributes`
+--
+ALTER TABLE `category_attributes`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `chats`
+--
+ALTER TABLE `chats`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `chat_messages`
+--
+ALTER TABLE `chat_messages`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `cities`
+--
+ALTER TABLE `cities`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `contacts`
+--
+ALTER TABLE `contacts`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `contact_replies`
+--
+ALTER TABLE `contact_replies`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `countries`
+--
+ALTER TABLE `countries`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `currencies`
+--
+ALTER TABLE `currencies`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `failed_jobs`
+--
+ALTER TABLE `failed_jobs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `faqs`
+--
+ALTER TABLE `faqs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `help_centers`
+--
+ALTER TABLE `help_centers`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `hub_files`
+--
+ALTER TABLE `hub_files`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `item_seens`
+--
+ALTER TABLE `item_seens`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `jobs`
+--
+ALTER TABLE `jobs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `menus`
+--
+ALTER TABLE `menus`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `menu_links`
+--
+ALTER TABLE `menu_links`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+
+--
+-- AUTO_INCREMENT for table `packages`
+--
+ALTER TABLE `packages`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `pages`
+--
+ALTER TABLE `pages`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `password_resets`
+--
+ALTER TABLE `password_resets`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `personal_access_tokens`
+--
+ALTER TABLE `personal_access_tokens`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `products`
+--
+ALTER TABLE `products`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `profile_attributes`
+--
+ALTER TABLE `profile_attributes`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `rates`
+--
+ALTER TABLE `rates`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `rate_limits`
+--
+ALTER TABLE `rate_limits`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `rate_limit_details`
+--
+ALTER TABLE `rate_limit_details`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+
+--
+-- AUTO_INCREMENT for table `redirections`
+--
+ALTER TABLE `redirections`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `report_errors`
+--
+ALTER TABLE `report_errors`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `sessions`
+--
+ALTER TABLE `sessions`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `settings`
+--
+ALTER TABLE `settings`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `sliders`
+--
+ALTER TABLE `sliders`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `states`
+--
+ALTER TABLE `states`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `stores`
+--
+ALTER TABLE `stores`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `subscriptions`
+--
+ALTER TABLE `subscriptions`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tables`
+--
+ALTER TABLE `tables`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tenants`
+--
+ALTER TABLE `tenants`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `user_jobs`
+--
+ALTER TABLE `user_jobs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `user_skills`
+--
+ALTER TABLE `user_skills`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `announcements`
+--
+ALTER TABLE `announcements`
+  ADD CONSTRAINT `announcements_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `announcements_attributes`
+--
+ALTER TABLE `announcements_attributes`
+  ADD CONSTRAINT `announcements_attributes_announcement_id_foreign` FOREIGN KEY (`announcement_id`) REFERENCES `announcements` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `articles`
+--
+ALTER TABLE `articles`
+  ADD CONSTRAINT `articles_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `article_categories`
+--
+ALTER TABLE `article_categories`
+  ADD CONSTRAINT `article_categories_article_id_foreign` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `article_categories_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `categories`
+--
+ALTER TABLE `categories`
+  ADD CONSTRAINT `categories_parent_id_foreign` FOREIGN KEY (`parent_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `categories_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `category_attributes`
+--
+ALTER TABLE `category_attributes`
+  ADD CONSTRAINT `category_attributes_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `contacts`
+--
+ALTER TABLE `contacts`
+  ADD CONSTRAINT `contacts_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `contact_replies`
+--
+ALTER TABLE `contact_replies`
+  ADD CONSTRAINT `contact_replies_contact_id_foreign` FOREIGN KEY (`contact_id`) REFERENCES `contacts` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `contact_replies_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `countries`
+--
+ALTER TABLE `countries`
+  ADD CONSTRAINT `countries_currency_id_foreign` FOREIGN KEY (`currency_id`) REFERENCES `currencies` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `faqs`
+--
+ALTER TABLE `faqs`
+  ADD CONSTRAINT `faqs_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `hub_files`
+--
+ALTER TABLE `hub_files`
+  ADD CONSTRAINT `hub_files_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `menu_links`
+--
+ALTER TABLE `menu_links`
+  ADD CONSTRAINT `menu_links_menu_id_foreign` FOREIGN KEY (`menu_id`) REFERENCES `menus` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `menu_links_menu_link_id_foreign` FOREIGN KEY (`menu_link_id`) REFERENCES `menu_links` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `pages`
+--
+ALTER TABLE `pages`
+  ADD CONSTRAINT `pages_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `profile_attributes`
+--
+ALTER TABLE `profile_attributes`
+  ADD CONSTRAINT `profile_attributes_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `rates`
+--
+ALTER TABLE `rates`
+  ADD CONSTRAINT `rates_rated_user_foreign` FOREIGN KEY (`rated_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `rates_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `rate_limits`
+--
+ALTER TABLE `rate_limits`
+  ADD CONSTRAINT `rate_limits_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `rate_limit_details`
+--
+ALTER TABLE `rate_limit_details`
+  ADD CONSTRAINT `rate_limit_details_rate_limit_id_foreign` FOREIGN KEY (`rate_limit_id`) REFERENCES `rate_limits` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `rate_limit_details_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `redirections`
+--
+ALTER TABLE `redirections`
+  ADD CONSTRAINT `redirections_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `report_errors`
+--
+ALTER TABLE `report_errors`
+  ADD CONSTRAINT `report_errors_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `stores`
+--
+ALTER TABLE `stores`
+  ADD CONSTRAINT `stores_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `stores_city_id_foreign` FOREIGN KEY (`city_id`) REFERENCES `cities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `stores_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `subscriptions`
+--
+ALTER TABLE `subscriptions`
+  ADD CONSTRAINT `subscriptions_package_id_foreign` FOREIGN KEY (`package_id`) REFERENCES `packages` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `subscriptions_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `user_jobs`
+--
+ALTER TABLE `user_jobs`
+  ADD CONSTRAINT `user_jobs_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `user_skills`
+--
+ALTER TABLE `user_skills`
+  ADD CONSTRAINT `user_skills_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

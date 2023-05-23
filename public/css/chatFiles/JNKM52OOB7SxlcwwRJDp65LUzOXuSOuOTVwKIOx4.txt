@@ -1,0 +1,89 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Jan 13, 2023 at 08:13 PM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 8.1.6
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `wazone`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `merchant_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `access_token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `refresh_token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'user' COMMENT 'admin, user',
+  `lang` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'us',
+  `theme` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'light-layout' COMMENT 'light-layout, dark-layout',
+  `package_id` int(11) NOT NULL DEFAULT 2,
+  `trial_period` int(11) NOT NULL DEFAULT 30,
+  `billing_interval` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'monthly' COMMENT 'monthly',
+  `current_sent` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `total_sent` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `billing_start` timestamp NOT NULL DEFAULT current_timestamp(),
+  `billing_end` timestamp NULL DEFAULT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `merchant_id`, `access_token`, `refresh_token`, `name`, `email`, `phone`, `password`, `role`, `lang`, `theme`, `package_id`, `trial_period`, `billing_interval`, `current_sent`, `total_sent`, `remember_token`, `billing_start`, `billing_end`, `email_verified_at`, `created_at`, `updated_at`) VALUES
+(1, NULL, NULL, NULL, 'admin', 'admin@admin.com', '16264838489', '$2y$10$Bmrq3zgAZY0fQy1SOJfK1OPeWN2Rffvv5XCDHu3HKDz7XN/4s6WjC', 'admin', 'ar', 'light-layout', 1, 125, 'monthly', 0, 0, '19dSp8ekBGgovsxlyiRaX3AtEYCJkPOwwjS9HLIQvjHqrGcXmIqkcBojkwA8', '2022-10-26 01:33:40', '2023-10-26 01:33:40', '2022-10-26 01:33:40', '2022-10-25 20:33:40', '2023-01-08 18:44:10'),
+(2, NULL, NULL, NULL, 'bank', 'bank@bank.com', '18184838489', '$2y$10$uiIuHVSoKSv1rOwOuMZR2etbaTShZ/tgMistM.Gv8Gf1vhYKca3J6', 'admin', 'us', 'light-layout', 1, 125, 'monthly', 0, 0, NULL, '2022-10-26 01:33:40', '2023-10-26 01:33:40', '2022-10-26 01:33:40', '2022-10-25 20:33:40', '2022-10-25 20:33:40'),
+(3, NULL, NULL, NULL, 'demo', 'demo@demo.com', '13235609448', '$2y$10$kUA0j4zsueMrrKcoTnUEZesyWJOfaCMvalamfrxvWKfkm0yEff1DW', 'user', 'ar', 'light-layout', 2, 125, 'monthly', 0, 0, 'zyLrjy4KydcvfsOrSIA2JkaRzvph7Uv7AKM6l2Pqy4Xxk1HVDyPQqtZVFXLk', '2022-10-26 01:33:40', '2023-10-26 01:33:40', '2022-10-26 01:33:40', '2022-10-25 20:33:40', '2022-12-01 18:27:10');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `users_name_unique` (`name`),
+  ADD UNIQUE KEY `users_email_unique` (`email`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
